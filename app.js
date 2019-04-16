@@ -18,14 +18,6 @@ const app                              = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// initialize connection to the database
-let dev_db_url = "mongodb+srv://ahess:Runyourdayallweeklong%231@movierecs-jit0p.gcp.mongodb.net/test?retryWrites=true";
-const mongoDB = process.env.MONGODB_URI || dev_db_url;
-mongoose.connect(mongoDB, {useNewUrlParser: true});
-mongoose.Promise = global.Promise;
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection failed:'));
-
 // configure middlewares
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -33,6 +25,14 @@ app.use(bodyParser.urlencoded({extended: false}));
 // configure routers
 app.use('/movies', movie);
 app.use('/users', user);
+
+// initialize connection to the database
+let dev_db_url = "mongodb+srv://ahess:Runyourdayallweeklong%231@movierecs-jit0p.gcp.mongodb.net/test?retryWrites=true";
+const mongoDB = process.env.MONGODB_URI || dev_db_url;
+mongoose.connect(mongoDB, {useNewUrlParser: true});
+mongoose.Promise = global.Promise;
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection failed:'));
 
 app.get('/', (req, res) => {
     res.send("Hello from App Engine!");

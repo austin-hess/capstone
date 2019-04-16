@@ -1,16 +1,19 @@
 // require node modules
-const express                          = require('express');
-const bodyParser                       = require('body-parser');
+const express                          = require('express'),
+      mongoose                         = require('mongoose'),
+      bodyParser                       = require('body-parser'),
+      cookieParser                     = require('cookie-parser'),
+      passport                         = require('passport'),
+      LocalStrategy                    = require('passport-local').Strategy;
 
 // require routes
-const movie                            = require('./routes/movie.route');
-const user                             = require('./routes/user.route');
+const movie                            = require('./routes/movie.route'),
+      user                             = require('./routes/user.route');
 
 // initialize express app
 const app                              = express();
 
 // initialize connection to the database
-const mongoose                         = require('mongoose');
 let dev_db_url = "mongodb+srv://ahess:Runyourdayallweeklong%231@movierecs-jit0p.gcp.mongodb.net/test?retryWrites=true";
 const mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, {useNewUrlParser: true});

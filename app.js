@@ -1,6 +1,7 @@
 // require node modules
 const express                          = require('express'),
       mongoose                         = require('mongoose'),
+      ejs                              = require('ejs'),
       bodyParser                       = require('body-parser'),
       cookieParser                     = require('cookie-parser'),
       passport                         = require('passport'),
@@ -12,6 +13,10 @@ const movie                            = require('./routes/movie.route'),
 
 // initialize express app
 const app                              = express();
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 // initialize connection to the database
 let dev_db_url = "mongodb+srv://ahess:Runyourdayallweeklong%231@movierecs-jit0p.gcp.mongodb.net/test?retryWrites=true";

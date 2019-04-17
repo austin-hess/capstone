@@ -25,6 +25,7 @@ const Movie                            = require('./models/movie.model'),
 app.set('view engine', 'ejs');
 
 // configure middlewares
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(session({
     secret: 'The world is actually really rad',
     resave: false,
@@ -63,7 +64,18 @@ app.get('/register', function (req, res) {
 });
 
 app.post('/register', function (req, res) {
-
+    console.log(req.body.password);
+    User.register(new User({ username: req.body.username }, 'password', function (err, user) {
+        if (err) {
+            console.log(err);
+            return res.render('pages/register');
+        }
+        // Logs user in
+        //passport.authenticate("local")(req, res, function() {
+        //    res.redirect('pages/secret');
+        //})
+        res.redirect('/register');
+    }));
 });
 
 const PORT = process.env.PORT || 3000;

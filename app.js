@@ -35,6 +35,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // configure passport
+passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -55,7 +56,12 @@ app.get('/', (req, res) => {
     res.render('pages/index');
 });
 
-app.get('/secret', function(req, res) {
+app.get('/logout', function (req, res) {
+    req.logout();
+    res.redirect('/');
+});
+
+app.get('/secret', isLoggedIn, function(req, res) {
     res.render('pages/secret');
 });
 
@@ -79,6 +85,18 @@ app.post('/register', function (req, res) {
         })
     });
 });
+
+app.post('/login', passport.authenticate("local", {
+    successRedirect: "/secret",
+    failureRedirect: "/login"  
+}), function (req, res) { });
+
+function isLoggedIn (req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect("/login");
+}
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

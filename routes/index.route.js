@@ -10,5 +10,7 @@ const auth = require('../middleware/auth'),
 router.get('/', index_controller.get_page_index);
 
 router.get('/registration', index_controller.get_page_registration);
+
+router.get('/login', index_controller.get_page_login);
   
 module.exports = router;

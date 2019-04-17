@@ -13,11 +13,12 @@ module.exports = {
         User.register(new User({ username: req.body.username }), req.body.password, function (err, user) {
             if (err) {
                 console.log(err);
-                return res.render('pages/register');
+                return res.render('pages/registration');
             }
             // Logs user in
             passport.authenticate("local")(req, res, function() {
-                res.redirect('/secret');
+                console.log("User created: " + req.user);
+                res.redirect("/");
             })
         });
     },

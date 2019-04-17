@@ -1,6 +1,3 @@
-var express                         = require('express'),
-    User                            = require('../models/user.model');
-
 module.exports = {
 
     get_page_index: function (req, res) {
@@ -8,11 +5,11 @@ module.exports = {
     },
 
     get_page_registration: function (req, res) {
-        res.render('pages/registration');
+        res.render('pages/registration', {user : req.user});
     },
 
     get_page_login: function (req, res) {
-        res.render('pages/login');
+        res.render('pages/login', {user : req.user});
     }
 
 }

@@ -2,7 +2,7 @@
 const express                          = require('express'),
       mongoose                         = require('mongoose'),
       ejs                              = require('ejs'),
-      expressSession                   = require('express-session'),
+      session                          = require('express-session'),
       bodyParser                       = require('body-parser'),
       cookieParser                     = require('cookie-parser');
 

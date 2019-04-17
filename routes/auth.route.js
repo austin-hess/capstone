@@ -6,7 +6,7 @@ const express                             = require('express'),
 const auth = require('../middleware/auth'),
       isLoggedIn = auth.isLoggedIn;
 
-router.get('/logout', auth_controller.logout);
+router.get('/logout', isLoggedIn, auth_controller.logout);
 
 router.post('/register', auth_controller.register);
 

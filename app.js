@@ -6,7 +6,8 @@ const express                          = require('express'),
       passport                         = require('passport'),
       LocalStrategy                    = require('passport-local'),
       passportLocalMongoose            = require('passport-local-mongoose'),
-      bodyParser                       = require('body-parser');
+      bodyParser                       = require('body-parser'),
+      path                             = require('path');
 
 
 // initialize express app
@@ -18,6 +19,10 @@ const Movie                            = require('./models/movie.model'),
 
 // view engine setup
 app.set('view engine', 'ejs');
+
+/* Set up 'public' directory for serving static resources */
+app.use('/static', express.static(path.join(__dirname, 'public')));
+
 
 // configure middlewares
 app.use(bodyParser.urlencoded({extended: true}));

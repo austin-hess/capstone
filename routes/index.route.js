@@ -12,27 +12,14 @@ router.get('/register', function(req, res) {
 });
 
 router.post('/register', function (req, res) {
-    User.register(new Account({
-        username: req.body.username,
-        email: req.body.email,
-        firstName: req.body.fName,
-        lastName: req.body.lName
-    }, req.body.password, function(err, user) {
-        if (err) {
-            return res.render('register', {user: user});
-        }
-
-        passport.authenticate('local')(req, res, function() {
-            res.redirect('/');
-        });
-    }));
+    
 });
 
 router.get('/login', function (req, res) {
-    res.render('login', {user: req.user});
+    res.render('pages/login', {user: req.user});
 });
 
-router.get('/login', function (req, res) {
+router.post('/login', function (req, res) {
     res.redirect('/');
 });
 

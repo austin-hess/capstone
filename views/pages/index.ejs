@@ -3,14 +3,10 @@
 <% include ../partials/head %>
 
 
-<% if (!user) {             %>
     <a href="/login">Login</a>
     <br>
     <a href="/register">Register</a>
-<% } else {                 %>
-    <p>You are currently logged in as <%= user.username %></p>
     <a href="/logout">Logout</a>
-<% }                        %>
 
 
 <% include ../partials/foot %>

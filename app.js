@@ -63,6 +63,10 @@ app.get('/register', function (req, res) {
     res.render('pages/register');
 });
 
+app.get('/login', function (req, res) {
+    res.render('pages/login');
+});
+
 app.post('/register', function (req, res) {
     User.register(new User({ username: req.body.username }), req.body.password, function (err, user) {
         if (err) {

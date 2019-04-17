@@ -1,5 +1,4 @@
 const express                             = require('express'),
-      passport                            = require('passport'),
       User                                = require('../models/user.model'),
       router                              = express.Router();
 
@@ -20,7 +19,7 @@ router.get('/login', function (req, res) {
 });
 
 router.post('/login', function (req, res) {
-    res.redirect('/');
+    
 });
 
 router.get('/logout', function (req, res) {
@@ -28,8 +27,8 @@ router.get('/logout', function (req, res) {
     res.redirect('/');
 });
 
-router.get('/ping', function (req, res) {
-    res.status(200).send("pong!");
+router.get('/current', (req, res, next) => {
+    
 });
-
+  
 module.exports = router;

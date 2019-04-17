@@ -6,6 +6,9 @@ const express                          = require('express'),
       bodyParser                       = require('body-parser'),
       cookieParser                     = require('cookie-parser');
 
+// initialize express app
+const app                              = express();
+
 // require routes
 const movie                            = require('./routes/movie.route'),
       user                             = require('./routes/user.route'),
@@ -14,9 +17,6 @@ const movie                            = require('./routes/movie.route'),
 // require models
 const Movie                            = require('./models/movie.model'),
       User                             = require('./models/user.model');
-
-// initialize express app
-const app                              = express();
 
 // view engine setup
 app.set('view engine', 'ejs');

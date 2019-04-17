@@ -4,9 +4,7 @@ const express                          = require('express'),
       ejs                              = require('ejs'),
       expressSession                   = require('express-session'),
       bodyParser                       = require('body-parser'),
-      cookieParser                     = require('cookie-parser'),
-      passport                         = require('passport'),
-      LocalStrategy                    = require('passport-local').Strategy;
+      cookieParser                     = require('cookie-parser');
 
 // require routes
 const movie                            = require('./routes/movie.route'),
@@ -27,23 +25,11 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
-app.use(expressSession({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: false
-}));
-app.use(passport.initialize());
-app.use(passport.session());
 
 // configure routers
 app.use('/movies', movie);
 app.use('/users', user);
 app.use('/', index);
-
-// configure passport
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
 
 // initialize connection to the database
 let dev_db_url = "mongodb+srv://ahess:Runyourdayallweeklong%231@movierecs-jit0p.gcp.mongodb.net/test?retryWrites=true";

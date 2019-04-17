@@ -64,18 +64,16 @@ app.get('/register', function (req, res) {
 });
 
 app.post('/register', function (req, res) {
-    console.log(req.body.password);
-    User.register(new User({ username: req.body.username }, 'password', function (err, user) {
+    User.register(new User({ username: req.body.username }), req.body.password, function (err, user) {
         if (err) {
             console.log(err);
             return res.render('pages/register');
         }
         // Logs user in
-        //passport.authenticate("local")(req, res, function() {
-        //    res.redirect('pages/secret');
-        //})
-        res.redirect('/register');
-    }));
+        passport.authenticate("local")(req, res, function() {
+            res.redirect('/secret');
+        })
+    });
 });
 
 const PORT = process.env.PORT || 3000;

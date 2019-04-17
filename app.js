@@ -10,7 +10,8 @@ const express                          = require('express'),
 
 // require routes
 const movie                            = require('./routes/movie.route'),
-      user                             = require('./routes/user.route');
+      user                             = require('./routes/user.route'),
+      index                            = require('./routes/index.route');
 
 // require models
 const Movie                            = require('./models/movie.model'),
@@ -20,7 +21,6 @@ const Movie                            = require('./models/movie.model'),
 const app                              = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // configure middlewares
@@ -38,6 +38,7 @@ app.use(passport.session());
 // configure routers
 app.use('/movies', movie);
 app.use('/users', user);
+app.use('/', index);
 
 // configure passport
 passport.use(new LocalStrategy(User.authenticate()));

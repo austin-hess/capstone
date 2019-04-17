@@ -2,6 +2,7 @@
 const express                          = require('express'),
       mongoose                         = require('mongoose'),
       ejs                              = require('ejs'),
+      session                          = require('express-session'),
       passport                         = require('passport'),
       LocalStrategy                    = require('passport-local'),
       passportLocalMongoose            = require('passport-local-mongoose'),
@@ -12,9 +13,9 @@ const express                          = require('express'),
 const app                              = express();
 
 // require routes
-const movie                            = require('./routes/movie.route'),
-      user                             = require('./routes/user.route'),
-      index                            = require('./routes/index.route');
+const movie_router                            = require('./routes/movie.route'),
+      user_router                             = require('./routes/user.route'),
+      index_router                            = require('./routes/index.route');
 
 // require models
 const Movie                            = require('./models/movie.model'),
@@ -24,12 +25,21 @@ const Movie                            = require('./models/movie.model'),
 app.set('view engine', 'ejs');
 
 // configure middlewares
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(session({
+    secret: 'The world is actually really rad',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// configure passport
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // configure routers
-app.use('/movies', movie);
-app.use('/users', user);
+app.use('/movies', movie_router);
+app.use('/users', user_router);
 //app.use('/', index);
 
 // initialize connection to the database
@@ -46,6 +56,14 @@ app.get('/', (req, res) => {
 
 app.get('/secret', function(req, res) {
     res.render('pages/secret');
+});
+
+app.get('/register', function (req, res) {
+    res.render('pages/register');
+});
+
+app.post('/register', function (req, res) {
+
 });
 
 const PORT = process.env.PORT || 3000;

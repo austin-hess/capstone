@@ -3,13 +3,13 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item mx-lg-4 active">
+            <li class="nav-item mx-lg-4">
                 <a class="nav-link" href="/">Movies<i class="fas fa-film mx-2"></i></a>
             </li>
             
                 <% if (user) {    %>
                     <li class="nav-item mx-lg-4">
-                        <a class="nav-link" href="/user/<%= user.id %>/profile">Profile<i class="fas fa-id-card mx-2"></i></a>
+                        <a class="nav-link" href="/users/profile">Profile<i class="fas fa-id-card mx-2"></i></a>
                     </li>
                 <% }    %>
                 

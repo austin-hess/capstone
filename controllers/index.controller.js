@@ -1,31 +1,27 @@
-const express                             = require('express'),
-      User                                = require('../models/user.model'),
-      router                              = express.Router();
-
 const isLoggedIn = require('../middleware/auth').isLoggedIn;
 
-router.get('/', (req, res) => {
+app.get('/', (req, res) => {
     res.render('pages/index');
 });
 
-router.get('/logout', function (req, res) {
+app.get('/logout', function (req, res) {
     req.logout();
     res.redirect('/');
 });
 
-router.get('/secret', isLoggedIn, function(req, res) {
+app.get('/secret', isLoggedIn, function(req, res) {
     res.render('pages/secret');
 });
 
-router.get('/register', function (req, res) {
+app.get('/register', function (req, res) {
     res.render('pages/register');
 });
 
-router.get('/login', function (req, res) {
+app.get('/login', function (req, res) {
     res.render('pages/login');
 });
 
-router.post('/register', function (req, res) {
+app.post('/register', function (req, res) {
     User.register(new User({ username: req.body.username }), req.body.password, function (err, user) {
         if (err) {
             console.log(err);
@@ -38,9 +34,7 @@ router.post('/register', function (req, res) {
     });
 });
 
-router.post('/login', passport.authenticate("local", {
+app.post('/login', passport.authenticate("local", {
     successRedirect: "/secret",
     failureRedirect: "/login"  
 }), function (req, res) { });
-  
-module.exports = router;

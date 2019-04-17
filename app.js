@@ -12,11 +12,6 @@ const express                          = require('express'),
 // initialize express app
 const app                              = express();
 
-// require routes
-const movie_router                            = require('./routes/movie.route'),
-      user_router                             = require('./routes/user.route'),
-      index_router                            = require('./routes/index.route');
-
 // require models
 const Movie                            = require('./models/movie.model'),
       User                             = require('./models/user.model');
@@ -42,7 +37,7 @@ passport.deserializeUser(User.deserializeUser());
 // configure routers
 app.use('/movies', movie_router);
 app.use('/users', user_router);
-//app.use('/', index);
+app.use('/', index_router);
 
 // initialize connection to the database
 let dev_db_url = "mongodb+srv://ahess:Runyourdayallweeklong%231@movierecs-jit0p.gcp.mongodb.net/test?retryWrites=true";
@@ -52,51 +47,10 @@ mongoose.Promise = global.Promise;
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection failed:'));
 
-app.get('/', (req, res) => {
-    res.render('pages/index');
-});
-
-app.get('/logout', function (req, res) {
-    req.logout();
-    res.redirect('/');
-});
-
-app.get('/secret', isLoggedIn, function(req, res) {
-    res.render('pages/secret');
-});
-
-app.get('/register', function (req, res) {
-    res.render('pages/register');
-});
-
-app.get('/login', function (req, res) {
-    res.render('pages/login');
-});
-
-app.post('/register', function (req, res) {
-    User.register(new User({ username: req.body.username }), req.body.password, function (err, user) {
-        if (err) {
-            console.log(err);
-            return res.render('pages/register');
-        }
-        // Logs user in
-        passport.authenticate("local")(req, res, function() {
-            res.redirect('/secret');
-        })
-    });
-});
-
-app.post('/login', passport.authenticate("local", {
-    successRedirect: "/secret",
-    failureRedirect: "/login"  
-}), function (req, res) { });
-
-function isLoggedIn (req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect("/login");
-}
+// require routes
+const movie_router                            = require('./routes/movie.route'),
+      user_router                             = require('./routes/user.route'),
+      index_router                            = require('./routes/index.route');
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

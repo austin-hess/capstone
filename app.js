@@ -34,11 +34,6 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// configure routers
-app.use('/movies', movie_router);
-app.use('/users', user_router);
-app.use('/', index_router);
-
 // initialize connection to the database
 let dev_db_url = "mongodb+srv://ahess:Runyourdayallweeklong%231@movierecs-jit0p.gcp.mongodb.net/test?retryWrites=true";
 const mongoDB = process.env.MONGODB_URI || dev_db_url;
@@ -51,6 +46,11 @@ db.on('error', console.error.bind(console, 'MongoDB connection failed:'));
 const movie_router                            = require('./routes/movie.route'),
       user_router                             = require('./routes/user.route'),
       index_router                            = require('./routes/index.route');
+
+// configure routers
+app.use('/movies', movie_router);
+app.use('/users', user_router);
+app.use('/', index_router);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

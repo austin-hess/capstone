@@ -1,40 +1,14 @@
-const isLoggedIn = require('../middleware/auth').isLoggedIn;
+var express                         = require('express'),
+    User                            = require('../models/user.model');
 
-app.get('/', (req, res) => {
-    res.render('pages/index');
-});
+module.exports = {
 
-app.get('/logout', function (req, res) {
-    req.logout();
-    res.redirect('/');
-});
+    get_page_index: function (req, res) {
+        res.render('pages/index');
+    },
 
-app.get('/secret', isLoggedIn, function(req, res) {
-    res.render('pages/secret');
-});
+    get_page_registration: function (req, res) {
+        res.render('pages/registration');
+    }
 
-app.get('/register', function (req, res) {
-    res.render('pages/register');
-});
-
-app.get('/login', function (req, res) {
-    res.render('pages/login');
-});
-
-app.post('/register', function (req, res) {
-    User.register(new User({ username: req.body.username }), req.body.password, function (err, user) {
-        if (err) {
-            console.log(err);
-            return res.render('pages/register');
-        }
-        // Logs user in
-        passport.authenticate("local")(req, res, function() {
-            res.redirect('/secret');
-        })
-    });
-});
-
-app.post('/login', passport.authenticate("local", {
-    successRedirect: "/secret",
-    failureRedirect: "/login"  
-}), function (req, res) { });
+}

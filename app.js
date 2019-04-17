@@ -2,9 +2,11 @@
 const express                          = require('express'),
       mongoose                         = require('mongoose'),
       ejs                              = require('ejs'),
-      session                          = require('express-session'),
-      bodyParser                       = require('body-parser'),
-      cookieParser                     = require('cookie-parser');
+      passport                         = require('passport'),
+      LocalStrategy                    = require('passport-local'),
+      passportLocalMongoose            = require('passport-local-mongoose'),
+      bodyParser                       = require('body-parser');
+
 
 // initialize express app
 const app                              = express();
@@ -24,12 +26,11 @@ app.set('view engine', 'ejs');
 // configure middlewares
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(cookieParser());
 
 // configure routers
 app.use('/movies', movie);
 app.use('/users', user);
-app.use('/', index);
+//app.use('/', index);
 
 // initialize connection to the database
 let dev_db_url = "mongodb+srv://ahess:Runyourdayallweeklong%231@movierecs-jit0p.gcp.mongodb.net/test?retryWrites=true";
@@ -40,7 +41,11 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection failed:'));
 
 app.get('/', (req, res) => {
-    res.send("Hello from App Engine!");
+    res.render('pages/index');
+});
+
+app.get('/secret', function(req, res) {
+    res.render('pages/secret');
 });
 
 const PORT = process.env.PORT || 3000;

@@ -14,3 +14,5 @@ router.post('/login', passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/login"  
 }), (req, res) => { });
+
+module.exports = router;

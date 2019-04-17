@@ -2,12 +2,18 @@
 
 <% include ../partials/head %>
 
+    <h1>MovieRecs</h1>
 
-    <a href="/login">Login</a>
-    <br>
-    <a href="/registration">Register</a>
-    <br>
+    <%  if (user) {  %>
+
     <a href="/logout">Logout</a>
 
+    <% } else { %>
 
+    <a href="/registration">Register</a>
+    <br>
+    <a href="/login">Login</a>
+
+    <% }        %>
+    
 <% include ../partials/foot %>

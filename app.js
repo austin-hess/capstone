@@ -45,9 +45,11 @@ db.on('error', console.error.bind(console, 'MongoDB connection failed:'));
 // require routes
 const movie_router                            = require('./routes/movie.route'),
       user_router                             = require('./routes/user.route'),
-      index_router                            = require('./routes/index.route');
+      index_router                            = require('./routes/index.route'),
+      auth_router                             = require('./routes/auth.route');
 
 // configure routers
+app.use('/', auth_router);
 app.use('/movies', movie_router);
 app.use('/users', user_router);
 app.use('/', index_router);

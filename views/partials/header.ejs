@@ -32,8 +32,11 @@
                     <a class="nav-link" href="/registration">Register<i class="fas fa-user-plus mx-2"></i></a>
                 </li>
             <% } else {        %>
+                <span class="navbar-text" style="color:gold; font-size: 1em;">
+                    Hello <%= user.first_name + ' ' + user.last_name %>!
+                </span>
                 <li class="nav-item mx-lg-4">
-                    <a class="nav-link" href="/logout">Log Out</a>
+                    <a class="nav-link" href="/logout">Log Out<i class="fas fa-power-off mx-2"></i></a>
                 </li>    
             <% }               %>
         </ul>

@@ -10,7 +10,14 @@ module.exports = {
     },
 
     register: function (req, res) {
-        User.register(new User({ username: req.body.username }), req.body.password, function (err, user) {
+        User.register(new User(
+            { 
+                username: req.body.username, 
+                first_name: req.body.fName,
+                last_name: req.body.lName,
+                email: req.body.email
+            }), 
+            req.body.password, function (err, user) {
             if (err) {
                 console.log(err);
                 return res.render('pages/registration');

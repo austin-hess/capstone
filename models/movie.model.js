@@ -8,6 +8,4 @@ let MovieSchema = new Schema({
     ratings: [Schema.Types.ObjectId]
 });
 
-MovieSchema.index({'title': 'text'});
-
 module.exports = mongoose.model('Movie', MovieSchema);

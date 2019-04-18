@@ -6,16 +6,17 @@
         <div class="col col-sm-7">
 
             <h2 class="text-center display-3 mb-4 mt-3">Ready to rate another movie?</h2>
-
-            <div class="container my-4 my-sm-4">
-                <form class="my-5" method="/movies/search" method="POST" id="searchForm">
-        
-                    <div class="form-group">
-                        <input class="form-control" type="search" name="movieSearchTerm" id="movieSearchTerm" placeholder="Search for a movie title here...">
+            <form method="POST" action="/movies/search" id="searchForm">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="query" placeholder="Search for movie titles here..." id="searchBar">
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary" disabled=true type="submit" id="searchSubmit">
+                                <i class="fa fa-search"></i>
+                        </button>
                     </div>
+                </div>
+            </form>
             
-                </form>
-            </div>
             
         </div>
     </div>

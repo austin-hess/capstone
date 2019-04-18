@@ -4,6 +4,6 @@ const router = express.Router();
 // Require the controllers
 const movie_controller = require('../controllers/movie.controller');
 
-router.get('/test', movie_controller.test);
+router.post('/search', movie_controller.search);
 
 module.exports = router;

@@ -1,0 +1,55 @@
+<% include ../partials/head %>
+<% include ../partials/header %>
+
+<div class="container mt-lg-4 mt-sm-2">
+
+    <h2 class="text-center display-3"><%= movie.title %></h2>
+
+    <h3 class="text-center mb-lg-5 mb-sm-3"><%= movie.year %></h3>
+    
+    <h4 class="text-center">Genres:</h4>
+    <div class="d-flex">
+        <ul class="list-inline mx-auto justify-content-center">
+            <% movie.genres.forEach(function(item) {    %>
+                <li class="list-inline-item"><%= item %></li>
+            <% })    %>
+        </ul>
+    </div>
+
+    <% if (alreadyRated) {    %>
+        <h6 class="text-center">Your Current Rating: <%= prevRating %></h6>
+    <% }  else {  %>
+
+    <div class="container text-center my-lg-4 my-sm-2">
+        <form class="" method="POST" action="/movies/rate">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="ratingSelector" id="ratingSelector1" value="1">
+                <label class="form-check-label" for="ratingSelector1">1</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="ratingSelector" id="ratingSelector2" value="2">
+                <label class="form-check-label" for="ratingSelector2">2</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="ratingSelector" id="ratingSelector3" value="3">
+                <label class="form-check-label" for="ratingSelector3">3</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="ratingSelector" id="ratingSelector4" value="4">
+                <label class="form-check-label" for="ratingSelector4">4</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="ratingSelector" id="ratingSelector5" value="5">
+                <label class="form-check-label" for="ratingSelector5">5</label>
+            </div>
+            <br>
+            <input type="hidden" id="movieId" name="movieId" value="<%= movie._id %>">
+            <button type="submit" class='btn btn-success my-lg-4 my-sm-2'>Submit</button>
+        </form>
+    </div>
+
+    <% }    %>
+
+</div>
+
+<% include ../partials/foot %>

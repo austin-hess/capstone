@@ -8,7 +8,7 @@ let UserSchema = new Schema({
     email: String,
     first_name: String,
     last_name: String,
-    ratings: [Schema.Types.ObjectId]
+    ratings: [{type: Schema.Types.ObjectId, ref: 'UserRating'}]
 });
 
 UserSchema.plugin(passportLocalMongoose);

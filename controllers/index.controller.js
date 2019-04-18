@@ -1,7 +1,6 @@
 module.exports = {
 
     get_page_index: function (req, res) {
-        console.log(req.user);
         res.render('pages/index', {user : req.user});
     },
 

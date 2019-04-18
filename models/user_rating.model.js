@@ -2,8 +2,8 @@ const mongoose = require('mongoose'),
       Schema   = mongoose.Schema;
 
 let UserRatingSchema = new Schema({
-    movie: Schema.Types.ObjectId,
-    user: Schema.Types.ObjectId,
+    movie: {type: Schema.Types.ObjectId, ref: 'Movie'},
+    user: {type: Schema.Types.ObjectId, ref: 'User'},
     rating: {type: Number, min: 1, max: 5}
 });
 

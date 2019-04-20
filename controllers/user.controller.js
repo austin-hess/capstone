@@ -14,10 +14,10 @@ module.exports = {
                 user_id: userId
             },
             json: true
-        }, function(err, res, body) {
+        }, function(err, response, body) {
             console.log(body);
             if (err) res.send(err);
-            
+
 
             res.render('pages/profile', {user : req.user, recommendations: []});
         });

@@ -18,21 +18,21 @@ module.exports = {
             console.log(body);
             if (err) res.send(err);
             var recommendations = [];
-            var counter = 0;
-            body.forEach(async function(rec) {
-                var item = {};
-                try {
-                    var movie = await Movie.findById(rec.movieId);
+            var idlist = [];
+            body.forEach(function(rec) {
+                idlist.push(mongoose.Types.ObjectId(rec.movieId));
+            });
+            Movie.find({'_id': { $in: idlist }}, function(err, movies) {
+                if (err) return res.send(err);
+                movies.forEach(function(item) {
                     item._id = rec.movieId;
                     item.title = movie.title;
                     item.year = movie.year;
                     item.rating = rec.ratingPred;
                     recommendations.push(item);
-                } catch (err) {
-                    return res.send(err);
-                }
-            })
-            res.render('pages/profile', {user : req.user, recommendations: []});
+                })
+            });
+            res.render('pages/profile', {user : req.user, recommendations: recommendations});
         });
     },
 

@@ -19,7 +19,7 @@ module.exports = {
             if (err) res.send(err);
 
             var obj = body[0];
-            console.log(obj);
+            console.log(obj.movieId);
             res.render('pages/profile', {user : req.user, recommendations: []});
         });
 

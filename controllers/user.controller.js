@@ -4,7 +4,7 @@ const User                  = require ("../models/user.model"),
 
 module.exports = {
 
-    get_user_profile: async function (req, res) {
+    get_user_profile: function (req, res) {
 
         var userId = req.user._id;
         request({

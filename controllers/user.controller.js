@@ -27,6 +27,7 @@ module.exports = {
                     item.title = movie.title;
                     item.year = movie.year;
                     item.rating = rec.ratingPred;
+                    recommendations.push(item);
                     counter++;
                 });
             })

@@ -4,7 +4,7 @@ const User                  = require ("../models/user.model"),
 
 module.exports = {
 
-    get_user_profile: function (req, res) {
+    get_user_profile: async function (req, res) {
 
         var userId = req.user._id;
         request({
@@ -21,23 +21,19 @@ module.exports = {
             var counter = 0;
             body.forEach(function(rec) {
                 var item = {};
-                Movie.findById(rec.movieId, function(err, movie) {
-                    if (err) res.send(err);
+                try {
+                    var movie = await Movie.findById(rec.movieId);
                     item._id = rec.movieId;
                     item.title = movie.title;
                     item.year = movie.year;
                     item.rating = rec.ratingPred;
                     recommendations.push(item);
-                    counter++;
-                });
+                } catch (err) {
+                    return res.send(err);
+                }
             })
-            while (counter < body.length - 1) {
-                // wait loop
-            }
             res.render('pages/profile', {user : req.user, recommendations: []});
         });
-
-        
     },
 
     update_user: function (req, res) {

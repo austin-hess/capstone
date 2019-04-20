@@ -1,4 +1,5 @@
 const User                  = require ("../models/user.model"),
+      Movie                 = require('../models/movie.model'),
       request               = require('request');
 
 module.exports = {
@@ -16,7 +17,9 @@ module.exports = {
         }, function(err, res, body) {
             console.log(body);
             if (err) res.send(err);
-            res.render('pages/profile', {user : req.user, recommendations: body});
+            
+
+            res.render('pages/profile', {user : req.user, recommendations: []});
         });
 
         

@@ -13,6 +13,5 @@ router.delete('/:id/delete', user_controller.delete_user);
 
 router.get('/profile', user_controller.get_user_profile);
 
-router.post('/get_recommendations', user_controller.get_recommendations);
 
 module.exports = router;

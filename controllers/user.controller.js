@@ -4,7 +4,22 @@ const User                  = require ("../models/user.model"),
 module.exports = {
 
     get_user_profile: function (req, res) {
-        res.render('pages/profile', {user : req.user});
+
+        var userId = req.user._id;
+        request({
+            method: 'POST',
+            uri: 'https://ibcf-service.ml/prediction',
+            body: {
+                user_id: userId
+            },
+            json: true
+        }, function(err, res, body) {
+            console.log(body);
+            if (err) res.send(err);
+            res.render('pages/profile', {user : req.user, recommendations: body});
+        });
+
+        
     },
 
     update_user: function (req, res) {
@@ -20,19 +35,4 @@ module.exports = {
             res.send('Deleted user succesfully');
         });
     },
-
-    get_recommendations: function (req, res) {
-        // get current user ID
-        var userId = req.user._id;
-        request({
-            method: 'POST',
-            uri: 'https://ibcf-service.ml/prediction',
-            body: {
-                user_id: userId
-            },
-            json: true
-        }, function(err, res, body) {
-            console.log(res);
-        });
-    }
 }

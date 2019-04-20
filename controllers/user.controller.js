@@ -1,5 +1,6 @@
 const User                  = require ("../models/user.model"),
       Movie                 = require('../models/movie.model'),
+      mongoose              = require('mongoose'),
       request               = require('request');
 
 module.exports = {

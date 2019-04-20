@@ -18,7 +18,8 @@ module.exports = {
             console.log(body);
             if (err) res.send(err);
 
-
+            var obj = body[0];
+            console.log(obj);
             res.render('pages/profile', {user : req.user, recommendations: []});
         });
 

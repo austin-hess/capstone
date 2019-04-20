@@ -17,9 +17,22 @@ module.exports = {
         }, function(err, response, body) {
             console.log(body);
             if (err) res.send(err);
-
-            var obj = body[0];
-            console.log(obj.movieId);
+            var recommendations = [];
+            var counter = 0;
+            body.forEach(function(rec) {
+                var item = {};
+                Movie.findById(rec.movieId, function(err, movie) {
+                    if (err) res.send(err);
+                    item._id = rec.movieId;
+                    item.title = movie.title;
+                    item.year = movie.year;
+                    item.rating = rec.ratingPred;
+                    counter++;
+                });
+            })
+            while (counter < body.length - 1) {
+                // wait loop
+            }
             res.render('pages/profile', {user : req.user, recommendations: []});
         });
 

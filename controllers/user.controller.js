@@ -19,10 +19,10 @@ module.exports = {
             if (err) res.send(err);
             var recommendations = [];
             var counter = 0;
-            body.forEach(function(rec) {
+            body.forEach(async function(rec) {
                 var item = {};
                 try {
-                    var movie = await Movie.findById(rec.movieId);
+                    var movie = Movie.findById(rec.movieId);
                     item._id = rec.movieId;
                     item.title = movie.title;
                     item.year = movie.year;

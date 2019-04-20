@@ -22,7 +22,7 @@ module.exports = {
             body.forEach(async function(rec) {
                 var item = {};
                 try {
-                    var movie = Movie.findById(rec.movieId);
+                    var movie = await Movie.findById(rec.movieId);
                     item._id = rec.movieId;
                     item.title = movie.title;
                     item.year = movie.year;

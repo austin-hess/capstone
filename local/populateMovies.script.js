@@ -14,7 +14,7 @@ const csv = require('csv-parser');
 
 var lineNum = 0;
 var header;
-var stream = fs.createReadStream(__dirname + '/movies.csv')
+var stream = fs.createReadStream( __dirname + '/movies.csv')
 .pipe(csv())
 .on('data', (row) => {
     let item = new Movie({

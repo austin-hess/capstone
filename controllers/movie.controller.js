@@ -1,6 +1,8 @@
 const Movie = require("../models/movie.model"),
       User = require("../models/user.model"),
-      UserRating = require('../models/user_rating.model');
+      UserRating = require('../models/user_rating.model'),
+      mongoose = require('mongoose'),
+      request = require('request');
 
 module.exports = {
 
@@ -15,7 +17,7 @@ module.exports = {
     get_movie_list: function (req, res) {
         Movie.find({}, function(err, results) {
             if (err) {
-                return res.render('pages/index', {user: req.user});
+                return res.send(err);
             }
 
             res.render('pages/catalog', {user: req.user, movies: results});
@@ -26,9 +28,8 @@ module.exports = {
         Movie.findById(req.params.id)
         .populate('ratings')
         .exec(function(err, movie) {
-            if (err) return res.redirect('/');
+            if (err) return res.send(err);
             if (movie !== undefined && movie != null) {
-                console.log(movie);
                 var alreadyRated = false;
                 var prevRating = null;
                 movie.ratings.forEach(function(rating) {
@@ -40,36 +41,41 @@ module.exports = {
                 })
                 return res.render('pages/movie_detail', {user: req.user, movie: movie, alreadyRated: alreadyRated, prevRating: prevRating});
             }
-            res.redirect('/');
+            res.send('Got nothing');
         })
     },
 
-    rate_movie: function (req, res) {
-        console.log(typeof req.user._id + ` ${req.user._id}`);
-        console.log(typeof req.body.movieId + ` ${req.body.movieId}`);
-        console.log(typeof req.body.ratingSelector + ` ${req.body.ratingSelector}`);
-        console.log(req.user._id);
-        //var rating = new UserRating();
-        UserRating.create({
-            user: req.user._id,
-            movie: req.body.movieId,
-            rating: req.body.ratingSelector
-        }, function(err, rating) {
-            if (err) return res.send(err);
-            Movie.findOneAndUpdate({_id: req.body.movieId}, 
-                {$push: {ratings: rating}},
-                {upsert: true},
-                function(err, movie) {
-                    if (err) return res.send(err);
-                    User.findOneAndUpdate({_id: req.user._id},
-                        {$push: {ratings: rating}},
-                        {upsert: true},
-                        function(err, user) {
-                            if (err) res.send(err);
-                            res.redirect(`/movies/${req.body.movieId}`);
-                        });
-                })
-            })
+    rate_movie: async function (req, res) {
+        // get required parameters
+        var user = req.user;
+        var movieID = mongoose.Types.ObjectId(req.body.movieId);
+        var rating = Number(req.body.ratingSelector);
+        // create UserRating 
+        var newRating = new UserRating({
+            user: user._id,
+            movie: movieID,
+            rating: rating
+        });
+        // save new UserRating
+        newRating = await newRating.save();
+        // find the movie that was rated and add the ObjectId to its ratings array
+        var updatedMovie = await Movie.findOneAndUpdate({'_id': movieID}, { $push: {ratings: newRating._id}}, {'new': true}).exec();
+        // find the current user and add the ObjectId to its ratings array
+        // if the movie the user rated is already in their predictions array, then $pull it
+        var updatedUser = await User.findOneAndUpdate({'_id': user._id}, { $push: {ratings: newRating._id}, $pull: {predictions: movieID}}, {'new': true}).exec();
+        // send a GET request to ibcf-service to re-calculate predictions
+        let options = {
+            uri: 'https://ibcf-service.ml/calculate',
+            method: "GET"
+        };
+        console.log("Requesting prediction re-calculation from ibcf-service");
+        request(options, function(err, res, body) {
+            if (err) console.log("Error with /calculate on ibcf-service");
+            console.log("Successful recalculation ibcf-service");
+        });
+        console.log(updatedUser);
+        console.log(updatedMovie);
+        res.redirect('/movies/list');
     }
 
 }

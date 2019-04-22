@@ -1,11 +1,11 @@
 const User                  = require ("../models/user.model"),
       Movie                 = require('../models/movie.model'),
-      request               = require('request');
-
+      request               = require('request-promise-native');
 module.exports = {
 
     get_user_profile: function (req, res) {
-        
+        console.log(req.user);
+        return res.render('pages/profile', {user: req.user});
     },
 
     update_user: function (req, res) {

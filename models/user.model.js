@@ -9,6 +9,7 @@ let UserSchema = new Schema({
     first_name: String,
     last_name: String,
     ratings: [{type: Schema.Types.ObjectId, ref: 'UserRating'}],
+    predictions: [{type: Schema.Types.ObjectId, ref: 'Movie'}]
 });
 
 UserSchema.plugin(passportLocalMongoose);

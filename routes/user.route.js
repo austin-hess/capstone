@@ -7,9 +7,9 @@ const auth = require('../middleware/auth'),
 // Require the controllers
 const user_controller = require('../controllers/user.controller');
 
-router.put('/:id/update', user_controller.update_user);
+//router.put('/:id/update', user_controller.update_user);
 
-router.delete('/:id/delete', user_controller.delete_user);
+//router.delete('/:id/delete', user_controller.delete_user);
 
 router.get('/profile', user_controller.get_user_profile);
 

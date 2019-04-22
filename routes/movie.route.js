@@ -7,7 +7,7 @@ const auth = require('../middleware/auth'),
 // Require the controllers
 const movie_controller = require('../controllers/movie.controller');
 
-router.post('/search', movie_controller.search);
+//router.post('/search', movie_controller.search);
 
 router.get('/list', movie_controller.get_movie_list);
 

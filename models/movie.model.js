@@ -5,7 +5,8 @@ let MovieSchema = new Schema({
     title: String,
     year: String,
     genres: [String],
-    ratings: [{type: Schema.Types.ObjectId, ref: 'UserRating'}]
+    ratings: [{type: Schema.Types.ObjectId, ref: 'UserRating'}],
+    imbdUrl: String
 });
 
 module.exports = mongoose.model('Movie', MovieSchema);

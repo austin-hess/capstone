@@ -1,0 +1,29 @@
+
+<% include ../partials/head %>
+<% include ../partials/header %>
+
+<div class="d-flex mt-lg-5 mt-sm-3">
+
+<% if (recommendations.length > 0) { %>
+      <ul class="list-inline mx-auto justify-content-center">
+        <% recommendations.forEach(function(movie) { %>
+        <li class="list-inline-item text-center border border-success rounded p-lg-4 p-sm-2 bg-col-rec">
+          <h3><%= movie.title %></h3>
+          <p><%= movie.year %></p>
+          <a href="/movies/<%= movie._id %>">
+            <button class="btn btn-primary rounded-pill">Details/Rate</button>
+          </a>
+        </li>
+        <% }) %>
+      </ul>
+      
+  </div>
+  <% } else { %>
+
+    <p>Rating data is too sparse to provide accurate recommendations at this time. Please rate more movies that you have seen.</p>
+
+  <% } %>
+
+  </div>
+
+  <% include ../partials/foot %>

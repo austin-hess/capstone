@@ -15,7 +15,7 @@ module.exports = {
     },
 
     get_movie_list: function (req, res) {
-        Movie.find({}, function(err, results) {
+        Movie.find({}).sort('title').exec(function(err, results) {
             if (err) {
                 return res.send(err);
             }

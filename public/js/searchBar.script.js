@@ -8,13 +8,7 @@ window.onload = function() {
     // add event listener to input
     searchBar.addEventListener('input', function(event) {
 
-        console.log(searchBar.value);
-
-        if (searchBar.value.length > 0) {
-            submitBtn.disabled = false;
-        } else {
-            submitBtn.disabled = true;
-        }
+        
     })
     
 }

@@ -1,0 +1,42 @@
+body {
+    background: rgb(41, 47, 54);
+}
+
+.c-message-div {
+    width:30%;
+    margin: 50px auto;
+    padding: 5px 0;
+    border-radius: 2%;
+    color: white;
+    background-color: rgba(109, 157, 197, 0.7);
+}
+
+.c-catalog-item {
+    background-color: rgba(109, 157, 197, 0.7);
+    color: white;
+}
+
+.c-text {
+    color: white;
+}
+
+.c-bg-nav {
+    background-color: #73ab84;
+}
+
+.c-welcome-text {
+    color: #c1292e;
+}
+
+.c-title-text {
+    color: white;
+}
+
+.c-title-text:hover {
+    color: rgb(115, 150, 234);
+    text-decoration: none;
+}
+
+#mytable .c-no-border {
+    border-top: none;
+}

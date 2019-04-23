@@ -2,9 +2,8 @@
 <% include ../partials/head %>
 <% include ../partials/header %>
 
-<div class="d-flex mt-lg-5 mt-sm-3">
-
 <% if (recommendations.length > 0) { %>
+  <div class="d-flex mt-lg-5 mt-sm-3"></div>
       <ul class="list-inline mx-auto justify-content-center">
         <% recommendations.forEach(function(movie) { %>
         <li class="list-inline-item text-center border border-success rounded p-lg-4 p-sm-2 bg-col-rec">
@@ -19,11 +18,11 @@
       
   </div>
   <% } else { %>
-
-    <p>Rating data is too sparse to provide accurate recommendations at this time. Please rate more movies that you have seen.</p>
-
+      <div class="c-message-div">
+          <p class="text-center">Rating data is too sparse to provide accurate recommendations at this time. Please rate more movies that you have seen.</p>
+      </div>
   <% } %>
 
-  </div>
+ 
 
   <% include ../partials/foot %>

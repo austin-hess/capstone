@@ -1,0 +1,24 @@
+
+<% include ../partials/movie_search %>
+
+<div class="container c-container-bg">    
+        <div class="row">
+            <% for (var i = 0; i < movies.length; i++) {                        %>
+                <% if (i % 3 == 0) { %>
+                
+                <% } %>
+                    <div class="col col-md-6 col-lg-4">
+                        <a href="/movies/<%= movies[i]._id %>">
+                            <div class="container text-center px-2 px-sm-3 my-2 my-sm-3 rounded c-catalog-item">
+                                <img class="my-3" src="/static/images/no-image.jpg">
+                                <p class="pb-3"><%= movies[i].title %> <% if (movies[i].year != 'NA') { %> <%= '(' + movies[i].year + ')' %> <% } %></p>
+                            </div>
+                        </a>
+                    </div>
+                <% if (i % 3 == 2) {  %>
+                
+                <% } %>
+            <% }                                                %>
+        </div>
+</div>
+

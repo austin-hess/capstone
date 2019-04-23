@@ -5,8 +5,13 @@ var mongoose = require('mongoose'),
 module.exports = {
 
     get_page_index: async function (req, res) {
-        
-        res.render('pages/index', {user : req.user});
+        Movie.find({}).sort('title').exec(function(err, results) {
+            if (err) {
+                return res.send(err);
+            }
+
+            res.render('pages/index', {user: req.user, movies: results});
+        });
     },
 
     get_page_registration: function (req, res) {

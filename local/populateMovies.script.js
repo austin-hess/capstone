@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-let dev_db_url = "mongodb+srv://ahess:Runyourdayallweeklong%231@movierecs-jit0p.gcp.mongodb.net/test2?retryWrites=true";
+let dev_db_url = "mongodb+srv://ahess:Runyourdayallweeklong%231@movierecs-jit0p.gcp.mongodb.net/test?retryWrites=true";
 const mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, {useNewUrlParser: true});
 mongoose.Promise = global.Promise;
@@ -11,12 +11,14 @@ var Movie = require('../models/movie.model');
 
 const fs = require('fs');
 const csv = require('csv-parser');
+const request = require('request-promise');
 
 const linksPath = __dirname + '/data/links.csv';
 const moviesPath = __dirname + '/data/movies.csv';
 
-var links = [];
+var linksList = [];
 var movies = [];
+var docs = [];
 
 process.on('exit', function(code) {
     console.log(`Exiting with ${code}`);
@@ -24,12 +26,11 @@ process.on('exit', function(code) {
 
 loadCsvToArray(linksPath)
 .then(function(links) {
-    console.log(links);
+    linksList = links;
     return loadCsvToArray(moviesPath);
 })
 .then(function(movies) {
-    console.log(movies);
-    movies.forEach(function(row, i) {
+    movies.forEach(async function(row, i) {
         let movieId = row.movieId.trim();
     
         // get the title, year, and genre
@@ -51,24 +52,20 @@ loadCsvToArray(linksPath)
             // leave genres array empty
             item.genres = []
         }
-    
-        // add the IMDB URL to the object
-        links.forEach(function(link) {
-            if (link[0] == movieId) {
-                item.imbdUrl = 'https://www.imdb.com/title/tt' + link[1];
-                break;
-            }
-        })
+
+        docs.push(item);
         
-    
-        console.log(item);
-        console.log('-------SAVING TO DB--------');
-        item.save(function(err, item) {
-            if (err) return console.error(err);
-            if (i == movies.length - 1) process.exitCode = 1;
-        });
     });
-    return Promise.resolve();
+    console.log('Inserting movies...');
+    Movie.insertMany(docs, function(err, movs) {
+        if (err) return console.error(err);
+        //console.log(movs);
+    });
+    
+   return Promise.resolve();
+})
+.then(function() {
+    console.log('complete');
 })
 
 function loadCsvToArray(path) {

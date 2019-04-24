@@ -4,17 +4,19 @@
 
 <% include ../partials/header %>
 
-<div class="container">
+<div class="container my-5" style="width: 45%">
+
+    <h2 class="text-center c-text">Login</h2>
 
     <form action="/login" method="POST">
     
         <div class="form-group">
-            <label for="loginUsername">Username</label>
+            <label class="c-text" for="loginUsername">Username</label>
             <input type="text" class="form-control" name="username" id="loginUsername" placeholder="Enter Username">
         </div>
 
         <div class="form-group">
-            <label for="loginPassword">Password</label>
+            <label class="c-text" for="loginPassword">Password</label>
             <input type="password" class="form-control" name="password" id="loginPassword" placeholder="Password">
         </div>
 

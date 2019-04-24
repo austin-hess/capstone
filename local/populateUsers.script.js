@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-let dev_db_url = "mongodb+srv://ahess:Runyourdayallweeklong%231@movierecs-jit0p.gcp.mongodb.net/test2?retryWrites=true";
+let dev_db_url = "mongodb+srv://ahess:Runyourdayallweeklong%231@movierecs-jit0p.gcp.mongodb.net/test?retryWrites=true";
 const mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, {useNewUrlParser: true});
 mongoose.Promise = global.Promise;
@@ -34,6 +34,7 @@ loadCsvToArray(ratingsPath)
     var userLookup = {};
     console.log(ratings);
 
+    var docArr = [];
     ratings.forEach(function(row) {
         if (userLookup[row.userId] != true) {
             userLookup[row.userId] = true;
@@ -46,16 +47,19 @@ loadCsvToArray(ratingsPath)
                 ratings: [],
                 predictions: []
             });
-            usr.save(function(err, usr) {
-                if (err) return console.error(err);
-                console.log('New user:');
-                console.log(usr);
-            })
+            docArr.push(usr);
         }
+    })
+
+    console.log('Inserting users...');
+    User.insertMany(docArr, function(err, usrs) {
+        if (err) return console.error(err);
+        console.log(usrs);
     })
 
     return Promise.resolve();
 })
+.then(() => console.log('complete'));
 
 
 function loadCsvToArray(path) {

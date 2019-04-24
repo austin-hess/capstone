@@ -13,16 +13,36 @@ db.on('error', console.error.bind(console, 'MongoDB connection failed:'));
 var Movie = require('../models/movie.model');
 
 const linksPath = __dirname + '/data/links.csv';
-
+var urls = [];
+var i = 0;
 loadCsvToArray(linksPath)
 .then(function(links) {
-    var urls = [];
-    links.forEach(async function(item) {
-        console.log(item.movieId);
-        var res = await request('http://www.omdbapi.com/?i=tt' + item.imdbId + '&apikey=2a9d2191');
-        console.log(res);
+    var secondary = [];
+    var linksList = links;
+    links.forEach(function(item) {
+        secondary.push(getURL(item.imdbId));
+    });
+    urls.push(secondary);
+    return Promise.all(urls[i]);
+})
+.then(function(urls) {
+    urls.forEach((item) => {
+        console.log(item);
     })
-});
+})
+.catch((err) => {
+    console.error(err);
+})
+
+async function getURL(id) {
+    let options = {
+        uri: 'http://private.omdbapi.com/?apikey=2a9d2191&i=' + id,
+        timeout: 60000,
+        method: 'GET'
+    };
+    var res = await request(options);
+    return res;
+}
 
 function loadCsvToArray(path) {
     return new Promise((resolve, reject) => {

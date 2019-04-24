@@ -1,6 +1,7 @@
 var mongoose = require('mongoose'),
     Movie = require('../models/movie.model'),
-    User = require('../models/user.model');
+    User = require('../models/user.model'),
+    request = require('request-promise');
 
 module.exports = {
 
@@ -24,10 +25,30 @@ module.exports = {
 
     get_page_recommendations: async function (req, res) {
         // get list of predictions for user
-        var recommendations = [];
-        if (req.user.predictions.length > 0) {
-            recommendations = await Movie.find({'_id': { $in: req.user.predictions}});
+        var pred_val = await request('http://ibcf-service.ml/calculate/' + String(req.user._id));
+
+        var pred_arr = [];
+        var pred_ins = '';
+        for (var i = 0; i < pred_val.length; i++) {
+            if (pred_val[i] == '[') {
+                i++;
+                pred_ins += pred_val[i];
+            } else if (pred_val[i] == ',' || pred_val[i] == ']') {
+                pred_arr.push(Number(pred_ins));
+                pred_ins = '';
+            } else if (pred_val[i] == ' ') {
+                i++;
+                pred_ins += pred_val[i];
+            } else {
+                pred_ins += pred_val[i];
+            }
         }
+
+        console.log(pred_arr);
+        
+        var recommendations = [];
+        recommendations = await Movie.find({'ml_id': {$in: pred_arr}}).exec();
+        
         res.render('pages/recommendations', {user: req.user, recommendations:recommendations});
     }
 

@@ -53,6 +53,8 @@ loadCsvToArray(linksPath)
             item.genres = []
         }
 
+        item.ml_id = Number(movieId);
+
         docs.push(item);
         
     });

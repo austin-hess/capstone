@@ -11,6 +11,14 @@ body {
     background-color: rgba(109, 157, 197, 0.7);
 }
 
+.c-list-item-no-dec {
+    color: #dae7f2;
+}
+
+.c-list-item-no-dec:hover {
+    color: white;
+}
+
 .c-catalog-item {
     background-color: rgba(109, 157, 197, 0.7);
     color: white;

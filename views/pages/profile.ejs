@@ -25,11 +25,11 @@
                 </tr>
                 <tr class="c-catalog-item text-center c-no-border">
                     <td class="c-no-border" colspan="2">Movies Rated:</td>
-                    <% if (user.ratings.length > 0) { %>
+                    <% if (movies.length > 0) { %>
                     <td class="c-no-border" colspan="2">
-                        <ul class="list-group">
-                            <% user.ratings.forEach(function(item) { %>
-                                <li class="list-item"><a href="/movies/<%= item._id %>"><%= item.title %></a></li>
+                        <ul style="list-style: none;" class="list-group">
+                            <% movies.forEach(function(item) { %>
+                                <li class="list-item"><a class="c-list-item-no-dec" href="/movies/<%= item._id %>"><%= item.title %></a></li>
                             <% }) %>
                         </ul>
                     </td>

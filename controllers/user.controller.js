@@ -1,17 +1,27 @@
 const User                  = require ("../models/user.model"),
       Movie                 = require('../models/movie.model'),
+      UserRating            = require('../models/user_rating.model'),
       request               = require('request-promise-native');
 module.exports = {
 
     get_user_profile: function (req, res) {
         console.log(req.user);
-        User.find({'_id': req.user._id})
+        User.findOne({'_id': req.user._id})
         .populate('ratings')
         .exec(function (err, user) {
             if (err) return res.send(err);
-            return res.render('pages/profile', {user: user});
-        })
-        
+            var movieIds = [];
+            user.ratings.forEach(function(obj) {
+                movieIds.push(obj.movie);
+            });
+            Movie.find({'_id': {$in: movieIds}})
+            .exec(function(err, movs) {
+                if(err) return res.send(err);
+                console.log(movs);
+                return res.render('pages/profile', {user: req.user, movies: movs});
+            });
+        });
+
     },
 
     update_user: function (req, res) {

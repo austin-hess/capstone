@@ -5,7 +5,13 @@ module.exports = {
 
     get_user_profile: function (req, res) {
         console.log(req.user);
-        return res.render('pages/profile', {user: req.user});
+        User.find({'_id': req.user._id})
+        .populate('ratings')
+        .exec(function (err, user) {
+            if (err) return res.send(err);
+            return res.render('pages/profile', {user: user});
+        })
+        
     },
 
     update_user: function (req, res) {

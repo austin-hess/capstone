@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-let dev_db_url = "mongodb+srv://ahess:Runyourdayallweeklong%231@movierecs-jit0p.gcp.mongodb.net/test2?retryWrites=true";
+let dev_db_url = "mongodb+srv://ahess:Runyourdayallweeklong%231@movierecs-jit0p.gcp.mongodb.net/test?retryWrites=true";
 const mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, {useNewUrlParser: true});
 mongoose.Promise = global.Promise;
@@ -71,29 +71,31 @@ loadCsvToArray(ratingsPath)
 })
 .then(function(ratings) {
 
-
+    var docArr = [];
     ratings.forEach(function(row) {
 
-            let UR = new UserRating({
-                user: mongoose.Types.ObjectId(usersDict[row.userId]),
-                movie: mongoose.Types.ObjectId(moviesDict[row.movieId]),
-                rating: Number(row.rating)
-            });
+        let UR = new UserRating({
+            user: mongoose.Types.ObjectId(usersDict[row.userId]),
+            movie: mongoose.Types.ObjectId(moviesDict[row.movieId]),
+            rating: Number(row.rating)
+        });
+        docArr.push(UR);
+    })
 
-            UR.save(function(err, ur) {
+    UserRating.insertMany(docArr, function(err, ur) {
+        if (err) return console.error(err);
+        ur.forEach(function(item) {
+            User.findOneAndUpdate({'_id': item.user}, { $push: {ratings: item._id}}, {new: true, upsert: true}, function(err, usr) {
                 if (err) return console.error(err);
-                console.log(ur);
-                User.findOneAndUpdate({'_id': mongoose.Types.ObjectId(usersDict[row.userId])}, { $push: {ratings: ur._id}}, function(err, usr) {
-                    if (err) return console.error(err);
-                    console.log('User updated');
-                    console.log(usr);
-                });
-                Movie.findOneAndUpdate({'_id': mongoose.Types.ObjectId(moviesDict[row.movieId])}, { $push: {ratings: ur._id}}, function(err, mov) {
-                    if (err) return console.error(err);
-                    console.log('Movie updated');
-                    console.log(mov);
-                })
+                console.log(`${usr.username} assigned rating ${item._id}`);
+            });
+            Movie.findOneAndUpdate({'_id': item.movie}, { $push: {ratings: item._id}}, {new: true, upsert: true}, function(err, mov) {
+                if (err) return console.error(err);
+                console.log(mov);
+                console.log(`${mov.title} assigned rating ${item._id}`);
             })
+        })
+        
     })
 })
 

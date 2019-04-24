@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-let dev_db_url = "mongodb+srv://ahess:Runyourdayallweeklong%231@movierecs-jit0p.gcp.mongodb.net/test?retryWrites=true";
+let dev_db_url = "mongodb+srv://ahess:Runyourdayallweeklong%231@movierecs-jit0p.gcp.mongodb.net/demo1?retryWrites=true";
 const mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, {useNewUrlParser: true});
 mongoose.Promise = global.Promise;
@@ -13,8 +13,8 @@ const fs = require('fs');
 const csv = require('csv-parser');
 const request = require('request-promise');
 
-const linksPath = __dirname + '/data/links.csv';
-const moviesPath = __dirname + '/data/movies.csv';
+const linksPath = __dirname + '/data/test-links.csv';
+const moviesPath = __dirname + '/data/test_movies.csv';
 
 var linksList = [];
 var movies = [];
@@ -24,11 +24,14 @@ process.on('exit', function(code) {
     console.log(`Exiting with ${code}`);
 });
 
+/*
 loadCsvToArray(linksPath)
 .then(function(links) {
     linksList = links;
     return loadCsvToArray(moviesPath);
-})
+})*/
+
+loadCsvToArray(moviesPath)
 .then(function(movies) {
     movies.forEach(async function(row, i) {
         let movieId = row.movieId.trim();

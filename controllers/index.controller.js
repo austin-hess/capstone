@@ -45,11 +45,11 @@ module.exports = {
         }
 
         console.log(pred_arr);
-        
+
         var recommendations = [];
         recommendations = await Movie.find({'ml_id': {$in: pred_arr}}).exec();
         
-        res.render('pages/recommendations', {user: req.user, recommendations:recommendations});
+        res.render('pages/recommendations', {user: req.user, movies:recommendations});
     }
 
 }

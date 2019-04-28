@@ -5,7 +5,7 @@ const Movie = require("../models/movie.model"),
       request = require('request');
 
 module.exports = {
-
+    
     search: async function (req, res) {
         var query = req.body.query;
 

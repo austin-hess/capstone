@@ -6,6 +6,7 @@ window.onload = function() {
     var searchBar = document.querySelector("#searchBar");
 
     // add event listener to input
+    /*
     searchBar.addEventListener('input', function(event) {
 
         if (searchBar.value.length > 0) {
@@ -13,5 +14,5 @@ window.onload = function() {
         } else {
             submitBtn.disabled = true;
         }
-    })
+    })*/
 }

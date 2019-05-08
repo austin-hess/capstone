@@ -57,7 +57,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 /* Connect to the MongoDB cloud-hosted database */
-const mongoDB = "mongodb+srv://ahess:-%24GMvyLwc8Lr%5E7a@movierecs-jit0p.gcp.mongodb.net/test?retryWrites=true";
+const mongoDB = "mongodb+srv://ahess:badpassword%231@movierecs-jit0p.gcp.mongodb.net/test?retryWrites=true";
 mongoose.connect(mongoDB, {useNewUrlParser: true});
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;

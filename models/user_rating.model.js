@@ -1,4 +1,12 @@
+/* user_rating.model.js - Defines UserRating object model with Mongoose
+    - Defines the UserRating Object model for the MongoDB collection
+
+    Author: Austin Hess
+*/
+
 const mongoose = require('mongoose'),
+
+/* Uses mongoose.Schema class to instantiate the model */
       Schema   = mongoose.Schema;
 
 let UserRatingSchema = new Schema({

@@ -1,7 +1,14 @@
+/* populateMovies.script.js - 
+
+Script to initially populate the database with the movies
+
+Author: Austin Hess
+*/
+
 var mongoose = require('mongoose');
 
-let dev_db_url = "mongodb+srv://ahess:Runyourdayallweeklong%231@movierecs-jit0p.gcp.mongodb.net/demo1?retryWrites=true";
-const mongoDB = process.env.MONGODB_URI || dev_db_url;
+// The DB is "test" in this URL, determines which DB to insert the collection of movies into
+const mongoDB = "mongodb+srv://ahess:-%24GMvyLwc8Lr%5E7a@movierecs-jit0p.gcp.mongodb.net/test?retryWrites=true";
 mongoose.connect(mongoDB, {useNewUrlParser: true});
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
@@ -20,51 +27,58 @@ var linksList = [];
 var movies = [];
 var docs = [];
 
+// Vain attempt to provide an exit code in the console to tell me all insertions were complete (they are asynchronous)
+// Did not get these working correctly yet
 process.on('exit', function(code) {
     console.log(`Exiting with ${code}`);
 });
 
-/*
-loadCsvToArray(linksPath)
-.then(function(links) {
-    linksList = links;
-    return loadCsvToArray(moviesPath);
-})*/
-
+/* Start promise chain to load in CSV and parse out each row */
 loadCsvToArray(moviesPath)
 .then(function(movies) {
     movies.forEach(async function(row, i) {
+
+        // Get the MovieLens movieID
         let movieId = row.movieId.trim();
     
-        // get the title, year, and genre
+        // Instantiate new Movie object model
         let item = new Movie();
-        // get the row - assume there is a year at the end
+
+        // Get the row - assume there is a year at the end
         item.title = row.title.slice(0, row.title.length - 6).trim();
-        // assuming year on end as '(year)', slice off
+
+        // Assuming year on end as '(year)', slice off
         item.year = row.title.slice(row.title.length - 5, row.title.length - 1);
-        // if the title row does not end in a parenthesis then there is no year attached
+
+        // If the title row does not end in a parenthesis then we know there is no year attached
         if (row.title.trim()[row.title.trim().length - 1] != ')') {
-            // save the whole title row to title and 'NA' to the year property
+
+            // Save the whole title row to title and 'NA' to the year property because we discovered there was no year included in the title column
             item.title = row.title.slice(0).trim();
             item.year = 'NA';
         }
-        // get the list of the genres delimited by '|'
+
+        // Get the list of the genres delimited by '|'
         item.genres = row.genres.split('|');
-        // if the first element equals '(no genres listed)' that means there are no genres
+
+        // If the first element equals '(no genres listed)' that means there are no genres
         if (item.genres[0] === "(no genres listed)") {
-            // leave genres array empty
+            // Leave genres array empty
             item.genres = []
         }
-
+        
+        // Assign the MovieLens movieID as a casted integer
         item.ml_id = Number(movieId);
 
         docs.push(item);
         
     });
+
     console.log('Inserting movies...');
+
+    // Insert all of the documents into the collection
     Movie.insertMany(docs, function(err, movs) {
         if (err) return console.error(err);
-        //console.log(movs);
     });
     
    return Promise.resolve();
@@ -73,6 +87,8 @@ loadCsvToArray(moviesPath)
     console.log('complete');
 })
 
+// Loads a CSV file into an array by row
+// Uses a filesystem stream to read in the lines
 function loadCsvToArray(path) {
     return new Promise((resolve, reject) => {
         var arr = [];

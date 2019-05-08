@@ -1,9 +1,12 @@
-<!-- views/pages/registration.ejs -->
+<!-- views/pages/registration.ejs 
+    Contains sole registration form for the app
+-->
 
 <% include ../partials/head %>
 
 <% include ../partials/header %>
 
+<!-- include script to determine when "Password Mismatch" alert is displayed -->
 <script src="/static/js/registrationForm.script.js"></script>
 
 <div class="container my-5" style="width: 45%;">
@@ -44,6 +47,7 @@
 
         <button class="btn btn-success" disabled=true type="submit" id="regSubmit">Sign Up</button>
 
+        <!-- Javascript interactive alert message that becomes unhidden if the passwords do not match -->
         <div class="alert alert-danger" hidden=true role="alert" id="regPWMessage">
             Passwords do not match!
         </div>

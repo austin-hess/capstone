@@ -1,3 +1,11 @@
+/* movie.controller.js - Movie Object controller functions
+    - searching for a movie
+    - get a movie's details
+    - rating a movie
+
+    Author: Austin Hess
+*/
+
 const Movie = require("../models/movie.model"),
       User = require("../models/user.model"),
       UserRating = require('../models/user_rating.model'),
@@ -6,6 +14,8 @@ const Movie = require("../models/movie.model"),
 
 module.exports = {
     
+    // Queries the database for movies upon post request from search bar form
+    // Re-renders the page index.ejs with the query results and current user object
     search: async function (req, res) {
         var query = req.body.query;
 
@@ -17,7 +27,9 @@ module.exports = {
             res.render('pages/index', {user: req.user, movies: results});
         });
     },
-
+    
+    // Queries the database for an individual movie
+    // Renders the page movie_detail.ejs with the current user object, the movie object, a boolean representing whether or not the current user previously rated the movie, and what that rating is if it is present
     get_movie: function (req, res) {
         Movie.findById(req.params.id)
         .populate('ratings')
@@ -39,6 +51,7 @@ module.exports = {
         })
     },
 
+    // Inserts a rating for the movie on current movie_detail page
     rate_movie: async function (req, res) {
         // get required parameters
         var user = req.user;

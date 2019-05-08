@@ -1,9 +1,13 @@
-<!-- views/partials/header.ejs -->
+<!-- views/partials/header.ejs 
+    Contains the navbar present on each page for a more dynamic viewing experience
+    Changes based on whether or not a user is currently authenticated
+-->
 
 <nav class="navbar navbar-expand-md text-white c-bg-nav">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
             
+                <!-- If there is a user logged in then display a "Profile" and "Recommendations" link -->
                 <% if (user) {    %>
                     <li class="nav-item mx-lg-4">
                         <a class="nav-link c-text" href="/users/profile">Profile<i class="fas fa-id-card mx-2"></i></a>
@@ -24,6 +28,7 @@
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
 
+            <!-- If no user logged in then display a login and register link -->
             <% if (!user) {    %>
                 <li class="nav-item mx-lg-4">
                     <a class="nav-link c-text" href="/login">Login<i class="fas fa-portrait mx-2"></i></a>
@@ -31,6 +36,8 @@
                 <li class="nav-item mx-lg-4">
                     <a class="nav-link c-text" href="/registration">Register<i class="fas fa-user-plus mx-2"></i></a>
                 </li>
+
+            <!-- If a user is logged in then display a greeting and a logout link -->
             <% } else {        %>
                 <span class="navbar-text c-welcome-text" style="font-size: 1em;">
                     Hello <%= user.first_name + ' ' + user.last_name %>!

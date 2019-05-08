@@ -1,3 +1,10 @@
+/* user.route.js - Defines user object related routes
+    - Routes dealing with actions that interact with user objects
+    - User profile route
+
+    Author: Austin Hess
+*/
+
 const express = require('express');
 const router = express.Router();
 

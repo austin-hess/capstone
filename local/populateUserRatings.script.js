@@ -1,7 +1,18 @@
+/* populateUserRatings.script.js - 
+
+NOT UTILIZED IN CURRENT VERSION BUT FUNCTIONAL
+
+Attempts to insert all the MovieLens provided UserRatings on top of the unique users it also provides
+This is alternative to keeping the entire training set on the recommendation server instead where real user info
+gets passed through that set instead of being integrated into the test data
+
+Author: Austin Hess
+*/
+
 var mongoose = require('mongoose');
 
-let dev_db_url = "mongodb+srv://ahess:Runyourdayallweeklong%231@movierecs-jit0p.gcp.mongodb.net/test?retryWrites=true";
-const mongoDB = process.env.MONGODB_URI || dev_db_url;
+// Connect to the database
+const mongoDB = "mongodb+srv://ahess:-%24GMvyLwc8Lr%5E7a@movierecs-jit0p.gcp.mongodb.net/test?retryWrites=true";
 mongoose.connect(mongoDB, {useNewUrlParser: true});
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
@@ -22,11 +33,13 @@ var ratings = [];
 var moviesDict = {};
 var usersDict = {};
 
+// Vain attempt to provide an exit code in the console to tell me all insertions were complete (they are asynchronous)
+// Did not get these working correctly yet
 process.on('exit', function(code) {
     console.log(`Exiting with ${code}`);
 });
 
-
+// Start promise chain to parse out the user ratings from the CSV file and associate with each user
 loadCsvToArray(ratingsPath)
 .then(async function(ratings) {
     var usernameList = [];

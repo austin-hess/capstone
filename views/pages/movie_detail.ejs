@@ -1,3 +1,7 @@
+<!-- views/pages/movie_detail.ejs 
+    Page that displays an individual movie's details
+-->
+
 <% include ../partials/head %>
 <% include ../partials/header %>
 
@@ -8,7 +12,8 @@
     <h5 class="text-center mb-lg-5 mb-sm-3 c-text"><%= movie.year %></h5>
 
     <img class="d-block mx-auto my-3 my-sm-5" src="/static/images/no-image.jpg">
-    
+
+    <!-- List the genres of the movie -->
     <h4 class="text-center c-text">Genres:</h4>
     <div class="d-flex c-text">
         <ul class="list-inline mx-auto justify-content-center">
@@ -18,10 +23,12 @@
         </ul>
     </div>
 
+    <!-- If you've already rated the movie then display that rating -->
     <% if (alreadyRated) {    %>
         <h6 class="text-center c-text">Your Current Rating: <%= prevRating %></h6>
     <% }  else {  %>
 
+    <!-- Display a radio button rating form -->
     <div class="container text-center my-lg-4 my-sm-2 c-text">
         <form class="" method="POST" action="/movies/rate">
             <div class="form-check form-check-inline">

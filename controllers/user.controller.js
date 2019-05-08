@@ -1,3 +1,11 @@
+/* user.controller.js - User object controller functions
+    - get a user's details
+    - update a user's details (NOT USED)
+    - delete a user (NOT USED)
+
+    Author: Austin Hess
+*/
+
 const User                  = require ("../models/user.model"),
       Movie                 = require('../models/movie.model'),
       UserRating            = require('../models/user_rating.model'),

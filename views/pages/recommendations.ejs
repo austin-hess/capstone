@@ -1,3 +1,6 @@
+<!-- views/pages/recommendations.ejs
+    Pings the recommendation service for current recommendations and renders them in grid on this page
+-->
 
 <% include ../partials/head %>
 <% include ../partials/header %>
@@ -6,6 +9,7 @@
   
   <% include ../partials/recs %>
 
+  <!-- If data was too sparse to calculate accurate recommendations at this time then display appropriate message -->
   <% } else { %>
       <div class="c-message-div">
           <p class="text-center">Rating data is too sparse to provide accurate recommendations at this time. Please rate more movies that you have seen.</p>

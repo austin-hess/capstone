@@ -45,7 +45,12 @@ module.exports = {
     // Renders the page recommendations.ejs with the current user object and the list of recommendations returned from the HTTP callout to the recommendation service
     get_page_recommendations: async function (req, res) {
         // get list of predictions for user
-        var pred_val = await request('http://ibcf-service.ml/calculate/' + String(req.user._id));
+
+        /* IMPORTANT: This is the variable that needs to reflect the host and port of the running recommender */
+        var endpoint = 'http://ibcf-service.ml/calculate/';
+        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+        var pred_val = await request(endpoint + String(req.user._id));
 
         var pred_arr = [];
         var pred_ins = '';

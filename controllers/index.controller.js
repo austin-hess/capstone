@@ -47,10 +47,10 @@ module.exports = {
         // get list of predictions for user
 
         /* IMPORTANT: This is the variable that needs to reflect the host and port of the running recommender */
-        var endpoint = 'http://ibcf-service.ml/calculate/';
+        var endpoint = 'http://ibcf-service.ml';
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-        var pred_val = await request(endpoint + String(req.user._id));
+        var pred_val = await request(endpoint + '/calculate/' + String(req.user._id));
 
         var pred_arr = [];
         var pred_ins = '';

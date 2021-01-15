@@ -13,7 +13,7 @@ var mongoose   = require('mongoose'),
     csv        = require('csv-parser');
 
 // Connect to the MongoDB cloud instance
-let dev_db_url = "mongodb+srv://ahess:-%24GMvyLwc8Lr%5E7a@movierecs-jit0p.gcp.mongodb.net/test?retryWrites=true";
+let dev_db_url = "mongodb+srv://ahess:xxxxxxxxxx.gcp.mongodb.net/test?retryWrites=true";
 const mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, {useNewUrlParser: true});
 mongoose.Promise = global.Promise;

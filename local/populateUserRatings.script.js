@@ -12,7 +12,7 @@ Author: Austin Hess
 var mongoose = require('mongoose');
 
 // Connect to the database
-const mongoDB = "mongodb+srv://ahess:-%24GMvyLwc8Lr%5E7a@movierecs-jit0p.gcp.mongodb.net/test?retryWrites=true";
+const mongoDB = "mongodb+srv://ahess:xxxxxxxxxxx.gcp.mongodb.net/test?retryWrites=true";
 mongoose.connect(mongoDB, {useNewUrlParser: true});
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;

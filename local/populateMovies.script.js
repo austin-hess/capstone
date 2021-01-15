@@ -8,7 +8,7 @@ Author: Austin Hess
 var mongoose = require('mongoose');
 
 // The DB is "test" in this URL, determines which DB to insert the collection of movies into
-const mongoDB = "mongodb+srv://ahess:-%24GMvyLwc8Lr%5E7a@movierecs-jit0p.gcp.mongodb.net/test?retryWrites=true";
+const mongoDB = "mongodb+srv://ahess:xxxxxxxxx.gcp.mongodb.net/test?retryWrites=true";
 mongoose.connect(mongoDB, {useNewUrlParser: true});
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
